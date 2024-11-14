@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from spyne.service import ServiceBase
 from spyne.decorator import rpc
 from spyne.model.primitive import Unicode
@@ -9,6 +10,10 @@ from spyne.model.complex import Iterable
 from django.views.decorators.csrf import csrf_exempt
 from .complexTypes import Account as complexAccount
 from .models import Account as modelAccount, Client as modelClient
+
+def ui_view(request):
+    print(request.headers)
+    return render(request, "bank/index.html")
 
 class AccountService(ServiceBase):
     @rpc(complexAccount, _returns=Unicode)
@@ -45,6 +50,7 @@ class AccountService(ServiceBase):
         complexAcc.balance=account.balance
         complexAcc.creationDate=account.creation_date
         return complexAcc
+    
     @rpc(_returns=Iterable(complexAccount))
     def get_all_accounts(self):
         accounts=modelAccount.objects.all()

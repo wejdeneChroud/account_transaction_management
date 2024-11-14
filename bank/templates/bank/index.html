@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank SOAP UI</title>
+    <!--
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    -->
+</head>
+<body>
+    <header>
+        <h1>Bank SOAP Service</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Create Account</h2>
+            <form id="createAccountForm">
+                <label for="rib">RIB:</label>
+                <input type="text" id="rib" name="rib" required>
+                <label for="client_cin">Client CIN:</label>
+                <input type="text" id="client_cin" name="client_cin" required>
+                <label for="client_name">Client Name:</label>
+                <input type="text" id="client_name" name="client_name" required>
+                <label for="client_familyName">Client Family Name:</label>
+                <input type="text" id="client_familyName" name="client_familyName" required>
+                <label for="client_email">Client Email:</label>
+                <input type="email" id="client_email" name="client_email" required>
+                <label for="balance">Balance:</label>
+                <input type="number" id="balance" name="balance" required>
+                <label for="creationDate">Creation Date:</label>
+                <input type="date" id="creationDate" name="creationDate" required>
+                <button type="submit">Create Account</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Get Account Details</h2>
+            <form id="getAccountForm">
+                <label for="email">Client Email:</label>
+                <input type="email" id="email" name="email" required>
+                <button type="submit">Get Account</button>
+            </form>
+            <div id="accountDetails"></div>
+        </section>
+
+        <section>
+            <h2>All Accounts</h2>
+            <button id="getAllAccountsBtn">Show All Accounts</button>
+            <div id="allAccounts"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Bank SOAP UI</p>
+    </footer>
+<!--
+    <script>
+        $(document).ready(function() {
+            // Handle creating an account
+            $('#createAccountForm').submit(function(event) {
+                event.preventDefault();
+                const formData = {
+                    rib: $('#rib').val(),
+                    client_cin: $('#client_cin').val(),
+                    client_name: $('#client_name').val(),
+                    client_familyName: $('#client_familyName').val(),
+                    client_email: $('#client_email').val(),
+                    balance: $('#balance').val(),
+                    creationDate: $('#creationDate').val(),
+                };
+                $.ajax({
+                    url: '/soap/',  // SOAP endpoint
+                    type: 'POST',
+                    data: JSON.stringify(formData),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        alert('Account Created Successfully');
+                    },
+                    error: function(error) {
+                        alert('Error creating account');
+                    }
+                });
+            });
+
+            // Handle getting account details
+            $('#getAccountForm').submit(function(event) {
+                event.preventDefault();
+                const email = $('#email').val();
+                $.ajax({
+                    url: '/soap/',  // SOAP endpoint
+                    type: 'GET',
+                    data: { email: email },
+                    success: function(response) {
+                        $('#accountDetails').html(`
+                            <p>RIB: ${response.rib}</p>
+                            <p>Client: ${response.client.name} ${response.client.familyName}</p>
+                            <p>Balance: ${response.balance}</p>
+                            <p>Creation Date: ${response.creationDate}</p>
+                        `);
+                    },
+                    error: function(error) {
+                        $('#accountDetails').html('<p>No account found for this email.</p>');
+                    }
+                });
+            });
+
+            // Handle getting all accounts
+            $('#getAllAccountsBtn').click(function() {
+                $.ajax({
+                    url: '/soap/',  // SOAP endpoint
+                    type: 'GET',
+                    success: function(response) {
+                        let accountsHtml = '<ul>';
+                        response.forEach(account => {
+                            accountsHtml += `<li>RIB: ${account.rib}, Client: ${account.client.name} ${account.client.familyName}, Balance: ${account.balance}</li>`;
+                        });
+                        accountsHtml += '</ul>';
+                        $('#allAccounts').html(accountsHtml);
+                    },
+                    error: function(error) {
+                        $('#allAccounts').html('<p>Unable to fetch accounts.</p>');
+                    }
+                });
+            });
+        });
+    </script>-->
+</body>
+</html>
